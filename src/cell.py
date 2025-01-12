@@ -12,9 +12,12 @@ class Cell():
         self.wall_down = True
         self.wall_left = True
         self.wall_right = True
+        self.visited = False
         self._win = win
 
     def draw(self, x1, y1, x2, y2, fill='black'):
+        if self._win is None:
+            return
         self.x1 = x1
         self.y1 = y1
         self.x2 = x2
@@ -22,15 +25,27 @@ class Cell():
         if self.wall_up:
             line = Line(Point(x1, y1), Point(x2, y1))
             self._win.draw_line(line, fill)
+        else:
+            line = Line(Point(x1, y1), Point(x2, y1))
+            self._win.draw_line(line, 'white')
         if self.wall_down:
             line = Line(Point(x1, y2), Point(x2, y2))
             self._win.draw_line(line, fill)
+        else:
+            line = Line(Point(x1, y2), Point(x2, y2))
+            self._win.draw_line(line, 'white')
         if self.wall_left:
             line = Line(Point(x1, y1), Point(x1, y2))
             self._win.draw_line(line, fill)
+        else:
+            line = Line(Point(x1, y1), Point(x1, y2))
+            self._win.draw_line(line, 'white')
         if self.wall_right:
             line = Line(Point(x2, y1), Point(x2, y2))
             self._win.draw_line(line, fill)
+        else:
+            line = Line(Point(x2, y1), Point(x2, y2))
+            self._win.draw_line(line, 'white')
 
     def draw_move(self, to_cell, undo=False):
         x = (self.x2 - self.x1) // 2 + self.x1
